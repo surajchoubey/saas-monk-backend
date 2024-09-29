@@ -8,7 +8,7 @@ export class ReviewService {
   constructor(@InjectModel(Review.name) private reviewModel: Model<Review>) {}
 
   async createReview(reviewDto: any): Promise<Review> {
-    return this.reviewModel.create(reviewDto);
+    return await this.reviewModel.create(reviewDto);
   }
 
   async searchReviews(movieId: string, keyword: string) {
@@ -26,10 +26,10 @@ export class ReviewService {
   }
 
   async updateReview(id: string, updateDto: any) {
-    return this.reviewModel.findByIdAndUpdate(id, updateDto, { new: true });
+    return await this.reviewModel.findByIdAndUpdate(id, updateDto, { new: true });
   }
 
   async deleteReview(id: string) {
-    return this.reviewModel.findByIdAndDelete(id);
+    return await this.reviewModel.findByIdAndDelete(id);
   }
 }

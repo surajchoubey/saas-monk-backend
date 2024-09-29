@@ -8,21 +8,21 @@ export class MovieController {
   @Get()
   async searchMovies(@Query('keyword') keyword: string) {
     if (!keyword) keyword = "";
-    return this.movieService.searchMoviesWithReviewsByTitle(keyword);
+    return await this.movieService.searchMoviesWithReviewsByTitle(keyword);
   }
 
   @Post()
   async createMovie(@Body() movieDto: any) {
-    return this.movieService.createMovie(movieDto);
+    return await this.movieService.createMovie(movieDto);
   }
 
   @Put(':id')
   async updateMovie(@Param('id') id: string, @Body() movieDto: any) {
-    return this.movieService.updateMovie(id, movieDto);
+    return await this.movieService.updateMovie(id, movieDto);
   }
 
   @Delete(':id')
   async deleteMovie(@Param('id') id: string) {
-    return this.movieService.deleteMovie(id);
+    return await this.movieService.deleteMovie(id);
   }
 }

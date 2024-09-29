@@ -7,8 +7,8 @@ import { Review } from '../reviews/review.schema';
 @Injectable()
 export class MovieService {
   constructor(
-    @InjectModel(Movie.name) private movieModel: Model<Movie>
-    // @InjectModel(Review.name) private reviewModel: Model<Review>
+    @InjectModel(Movie.name) private movieModel: Model<Movie>,
+    @InjectModel(Review.name) private reviewModel: Model<Review>
   ) {}
 
   async createMovie(movieDto: any): Promise<Movie> {
@@ -16,7 +16,7 @@ export class MovieService {
   }
 
   async searchMoviesWithReviewsByTitle(keyword: string) {
-    return this.movieModel.aggregate([
+    return await this.movieModel.aggregate([
       {
         $match: {
           title: { $regex: keyword, $options: 'i' },
@@ -39,10 +39,11 @@ export class MovieService {
   }  
 
   async updateMovie(id: string, updateDto: any) {
-    return this.movieModel.findByIdAndUpdate(id, updateDto, { new: true });
+    return await this.movieModel.findByIdAndUpdate(id, updateDto, { new: true });
   }
 
   async deleteMovie(id: string) {
-    return this.movieModel.findByIdAndDelete(id);
+    await this.reviewModel.deleteMany({ movieId: id });
+    return await this.movieModel.findByIdAndDelete(id);
   }
 }

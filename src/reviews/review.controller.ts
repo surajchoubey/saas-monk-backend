@@ -8,21 +8,21 @@ export class ReviewController {
   @Get(':movieId')
   async searchReviews(@Param('movieId') movieId: string, @Query('keyword') keyword: string) {
     if (!keyword) keyword = "";
-    return this.reviewService.searchReviews(movieId, keyword);
+    return await this.reviewService.searchReviews(movieId, keyword);
   }
 
   @Post()
   async createReview(@Body() reviewDto: any) {
-    return this.reviewService.createReview(reviewDto);
+    return await this.reviewService.createReview(reviewDto);
   }
 
   @Put(':id')
   async updateReview(@Param('id') id: string, @Body() reviewDto: any) {
-    return this.reviewService.updateReview(id, reviewDto);
+    return await this.reviewService.updateReview(id, reviewDto);
   }
 
   @Delete(':id')
   async deleteReview(@Param('id') id: string) {
-    return this.reviewService.deleteReview(id);
+    return await this.reviewService.deleteReview(id);
   }
 }
